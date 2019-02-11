@@ -26,6 +26,6 @@ if __name__ == '__main__':
     source_file_name = os.path.join(my_path, "../../python_sample.csv")
     bucket_name = "test-mpp-bucket"
     # source_file_name = "../python_sample.csv"
-    destination_blob_name = "demo/python_sample_1.csv"
+    destination_blob_name = "demo/python_sample_3.csv"
 
     upload_blob(bucket_name,source_file_name,destination_blob_name,"text/csv")
