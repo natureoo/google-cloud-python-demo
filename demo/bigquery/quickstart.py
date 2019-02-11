@@ -255,14 +255,12 @@ def test_query_results_sql():
     # [END bigquery_query_results_dataframe]
 
 
-def test_query_results_dataframe():
+def test_query_results_dataframe(sql):
     # [START bigquery_query_results_dataframe]
     # from google.cloud import bigquery
     # client = bigquery.Client()
 
-    sql = """
-     SELECT * FROM python_sample_dataset.python_sample;
-    """
+
 
 
     df = client.query(sql).to_dataframe()
@@ -322,8 +320,11 @@ if __name__ == '__main__':
     # test_list_storages()
     # test_codes()
     # test_dataset_exists()
-    # test_load_table_from_uri_autodetect("python_sample_dataset","python_sample", "gs://test-mpp-bucket/demo/python_sample.csv",bigquery.SourceFormat.CSV)
+    test_load_table_from_uri_autodetect("python_sample_dataset","python_sample_1", "gs://test-mpp-bucket/demo/python_sample.csv",bigquery.SourceFormat.CSV)
     # test_client_query("python_sample_dataset","python_sample")
     # test_client_list_jobs()
     # test_query_results_sql()
-    test_query_results_dataframe()
+    sql = """
+       SELECT * FROM python_sample_dataset.python_sample_1;
+      """
+    test_query_results_dataframe(sql)

@@ -1,4 +1,6 @@
 from google.cloud import storage
+import os.path
+
 
 client = storage.Client()
 
@@ -20,8 +22,10 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name,content_typ
 
 
 if __name__ == '__main__':
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    source_file_name = os.path.join(my_path, "../../python_sample.csv")
     bucket_name = "test-mpp-bucket"
-    source_file_name = "/Users/chenjian/Documents/chenj/work/workplace/study/demo/google-cloud-python-demo/python_sample.csv"
-    destination_blob_name = "demo/python_sample.csv"
+    # source_file_name = "../python_sample.csv"
+    destination_blob_name = "demo/python_sample_1.csv"
 
     upload_blob(bucket_name,source_file_name,destination_blob_name,"text/csv")
