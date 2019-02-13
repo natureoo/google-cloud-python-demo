@@ -90,9 +90,8 @@ def test_list_storages():
 
 # def auth():
 
-def test_create_dataset():
+def test_create_dataset(dataset_id):
     """Create a dataset."""
-    dataset_id = "create_dataset_{}".format(_millis())
     client = bigquery.Client()
 
     # [START bigquery_create_dataset]
@@ -113,6 +112,7 @@ def test_create_dataset():
     # Raises google.api_core.exceptions.Conflict if the Dataset already
     # exists within the project.
     dataset = client.create_dataset(dataset)  # API request
+    return dataset
     # [END bigquery_create_dataset]
 
 # [START bigquery_dataset_exists]
@@ -146,26 +146,8 @@ def test_dataset_exists():
 
 # bigquery.SourceFormat.CSV
 def test_load_table_from_uri_autodetect(dataset_id,table_name,uri, format):
-    """Load table from a GCS URI using various formats and auto-detected schema
 
-    Each file format has its own tested load from URI sample. Because most of
-    the code is common for autodetect, append, and truncate, this sample
-    includes snippets for all supported formats but only calls a single load
-    job.
 
-    This code snippet is made up of shared code, then format-specific code,
-    followed by more shared code. Note that only the last format in the
-    format-specific code section will be tested in this test.
-    """
-    # dataset = bigquery.Dataset(client.dataset(dataset_id))
-    # client.create_dataset(dataset)
-
-    # Shared code
-    # [START bigquery_load_table_gcs_csv_autodetect]
-    # [START bigquery_load_table_gcs_json_autodetect]
-    # from google.cloud import bigquery
-    # client = bigquery.Client()
-    # dataset_id = 'my_dataset'
 
     dataset_ref = client.dataset(dataset_id)
     job_config = bigquery.LoadJobConfig()
@@ -204,8 +186,7 @@ def test_load_table_from_uri_autodetect(dataset_id,table_name,uri, format):
     # [END bigquery_load_table_gcs_csv_autodetect]
     # [END bigquery_load_table_gcs_json_autodetect]
 
-    # out, _ = capsys.readouterr()
-    # assert "Loaded 50 rows." in out
+
 
 def test_client_query_job(dataset_id, table_id):
 
@@ -260,9 +241,6 @@ def test_query_results_dataframe(sql):
     # from google.cloud import bigquery
     # client = bigquery.Client()
 
-
-
-
     df = client.query(sql).to_dataframe()
     # print(df)
     display(df)
@@ -315,16 +293,12 @@ def test_codes():
 
 
 if __name__ == '__main__':
-    # run_quickstart()
-    # test_list_datasets()
-    # test_list_storages()
-    # test_codes()
-    # test_dataset_exists()
-    test_load_table_from_uri_autodetect("python_sample_dataset","python_sample_3", "gs://test-mpp-bucket/demo/python_sample_3.csv",bigquery.SourceFormat.CSV)
-    # test_client_query("python_sample_dataset","python_sample")
-    # test_client_list_jobs()
-    # test_query_results_sql()
+    # test_create_dataset("python_sample_dataset_1")
+
+
+    test_load_table_from_uri_autodetect("python_sample_dataset_1", "python_sample_mpp",
+                                        "gs://tmp-mpp-bucket_1/demo/python_sample.csv", bigquery.SourceFormat.CSV)
     sql = """
-       SELECT * FROM python_sample_dataset.python_sample_3;
+       SELECT * FROM python_sample_dataset_1.python_sample_mpp;
       """
     test_query_results_dataframe(sql)
