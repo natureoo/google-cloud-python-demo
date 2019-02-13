@@ -181,7 +181,7 @@ def test_load_table_from_uri_autodetect(dataset_id,table_name,uri, format):
     load_job.result()  # Waits for table load to complete.
     print("Job finished.")
 
-    destination_table = client.get_table(dataset_ref.table("us_states"))
+    destination_table = client.get_table(dataset_ref.table(table_name))
     print("Loaded {} rows.".format(destination_table.num_rows))
     # [END bigquery_load_table_gcs_csv_autodetect]
     # [END bigquery_load_table_gcs_json_autodetect]
@@ -296,8 +296,7 @@ if __name__ == '__main__':
     # test_create_dataset("python_sample_dataset_1")
 
 
-    test_load_table_from_uri_autodetect("python_sample_dataset_1", "python_sample_mpp",
-                                        "gs://tmp-mpp-bucket_1/demo/python_sample.csv", bigquery.SourceFormat.CSV)
+    test_load_table_from_uri_autodetect("python_sample_dataset_1", "python_sample_mpp",  "gs://tmp-mpp-bucket_1/demo/python_sample.csv", bigquery.SourceFormat.CSV)
     sql = """
        SELECT * FROM python_sample_dataset_1.python_sample_mpp;
       """
