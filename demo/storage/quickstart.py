@@ -42,5 +42,5 @@ def test_upload_localfile():
 
 
 if __name__ == '__main__':
-    # test_create_bucket("tmp-mpp-bucket_1")
-    test_upload_localfile()
+    test_create_bucket("tmp-mpp-bucket_1")
+    # test_upload_localfile()
