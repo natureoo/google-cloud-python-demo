@@ -3,6 +3,7 @@ from IPython.display import display
 from IPython.core.display import HTML
 import os.path
 import matplotlib.pyplot as plt
+import backports.configparser as cf
 from pylab import *
 
 
@@ -34,5 +35,10 @@ def test_matplotlib():
     show()
 
 if __name__ == '__main__':
-    test_dispay_pandas()
+    # test_dispay_pandas()
     # test_matplotlib()
+    # os.system("whoami")
+    # logging.info("whoami")
+    mail_list = []
+    params = ','.join(mail_list)
+    print(params)
