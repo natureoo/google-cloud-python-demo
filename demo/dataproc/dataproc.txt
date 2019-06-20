@@ -1,0 +1,24 @@
+   gcloud dataproc clusters create cluster-datacleaning \
+    --project angelic-pipe-243303 \
+     --region asia-northeast2 \
+    --zone asia-northeast2-b \
+    --master-machine-type n1-standard-1 \
+    --master-boot-disk-size 15 \
+    --num-workers 0 \
+    --max-idle 0.5h \
+    --initialization-actions gs://dataproc-initialization-actions/connectors/connectors.sh \
+    --metadata bigquery-connector-version=0.13.16 \
+    --bucket=mpptmp
+
+
+	  gcloud dataproc jobs submit pyspark --cluster cluster-datacleaning \
+	  --region asia-northeast2 \
+	  data-cleaning.py  --properties \
+	  "spark.pyspark.python=python3.5,spark.pyspark.driver.python=python3.5"
+
+
+
+  gcloud dataproc jobs submit pyspark check_python_env.py \
+   --region asia-northeast2 \
+    --cluster=cluster-datacleaning \
+    -- pandas scipy
