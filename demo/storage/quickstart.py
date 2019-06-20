@@ -1,9 +1,13 @@
 from google.cloud import storage
 from google.cloud.storage import Bucket
 import os.path
+import time
+
 
 
 client = storage.Client()
+
+index = 4
 
 #create a new bucket
 def test_create_bucket(bucket_name):
@@ -33,14 +37,30 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name,content_typ
 #upload localfile to the remote bucket
 def test_upload_localfile():
     my_path = os.path.abspath(os.path.dirname(__file__))
-    source_file_name = os.path.join(my_path, "../../python_sample.csv")
-    bucket_name = "tmp-mpp-bucket_1"
+    source_file_name = os.path.join(my_path, "../../user-stream.txt")
+    bucket_name = "mpp-bucket"
     # source_file_name = "../python_sample.csv"
-    destination_blob_name = "demo/python_sample.csv"
+    destination_blob_name = "dataflow/user-stream.txt"
 
-    upload_blob(bucket_name, source_file_name, destination_blob_name, "text/csv")
+    upload_blob(bucket_name, source_file_name, destination_blob_name, "text/plain")
+
+def write_file(i):
+    my_path = os.path.abspath(os.path.dirname(__file__))
+    source_file_name = os.path.join(my_path, "../../user-stream.txt")
+    text_file = open(source_file_name,"a")
+
+
+    text_file.write("{0}-{1}-{2}\n".format(i, i, i) )
+    print("insert one record sleep 1 sec")
+
+    text_file.close()
 
 
 if __name__ == '__main__':
-    test_create_bucket("tmp-mpp-bucket_1")
-    # test_upload_localfile()
+    # test_create_bucket("tmp-mpp-bucket_1")
+    for i in range(index, 100000000):
+        write_file(i)
+        time.sleep(1)
+        if i%10 == 0:
+            print("upload")
+            test_upload_localfile()

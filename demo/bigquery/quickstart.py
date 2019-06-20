@@ -294,10 +294,10 @@ def test_codes():
 
 if __name__ == '__main__':
     # test_create_dataset("python_sample_dataset_1")
+    test_list_datasets()
 
-
-    test_load_table_from_uri_autodetect("python_sample_dataset_1", "python_sample_mpp",  "gs://tmp-mpp-bucket_1/demo/python_sample.csv", bigquery.SourceFormat.CSV)
-    sql = """
-       SELECT * FROM python_sample_dataset_1.python_sample_mpp;
-      """
-    test_query_results_dataframe(sql)
+    # test_load_table_from_uri_autodetect("python_sample_dataset_1", "python_sample_mpp",  "gs://tmp-mpp-bucket_1/demo/python_sample.csv", bigquery.SourceFormat.CSV)
+    # sql = """
+    #    SELECT * FROM python_sample_dataset_1.python_sample_mpp;
+    #   """
+    # test_query_results_dataframe(sql)
